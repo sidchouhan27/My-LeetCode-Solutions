@@ -1,0 +1,44 @@
+[LC-345] Reverse Vowels of a String - Easy
+
+Given a string s, reverse only all the vowels in the string and return it.
+The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower and upper cases, more than once.
+
+Example 1:
+Input: s = "hello"
+Output: "holle"
+
+Example 2:
+Input: s = "leetcode"
+Output: "leotcede"
+
+Constraints:
+1 <= s.length <= 3 * 10^5
+s consist of printable ASCII characters.
+
+[C++] Solution:
+
+//TC: O(N)
+//SC: O(1)
+class Solution {
+public:
+    bool isVowel(char c){
+	return(c=='a'||c=='A'||c=='e'||c=='E'||c=='i'||c=='I'||c=='o'||c=='O'||c=='u'||c=='U');
+    }
+    string reverseVowels(string s) {
+        	int start=0,end=s.length()-1;
+	while(start<end){
+		if(!isVowel(s[start])){
+			start++;
+			continue;
+		}
+		if(!isVowel(s[end])){
+			end--;
+			continue;
+		}
+		swap(s[start], s[end]);
+		start++;
+		end--;
+	}
+	return s;
+    }
+};
