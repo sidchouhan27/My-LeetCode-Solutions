@@ -1,0 +1,91 @@
+[LC-387] First Unique Character in a String - Easy
+
+Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1.
+
+Example 1:
+Input: s = "leetcode"
+Output: 0
+
+Example 2:
+Input: s = "loveleetcode"
+Output: 2
+
+Example 3:
+Input: s = "aabb"
+Output: -1
+
+Constraints:
+1 <= s.length <= 10^5
+s consists of only lowercase English letters.
+
+[C++] Solution:
+
+//Brute Force: Using Nested Loop
+//TC: O(N^2)
+//SC: O(1)
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        int n=s.size();
+        if(n==1)
+            return 0;
+        for(int i=0; i<n; i++){
+            bool notFound=true;
+            for(int j=0; j<n; j++){
+                if(s[i]==s[j] && i!=j){
+                    notFound=false;
+                    break;
+                }
+            }
+            if(notFound)
+                return i;
+        }
+        return -1;
+    }
+};
+
+//Using Map
+//TC: O(N) + O(N)
+//SC: O(26)
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        if(s.size()==1)
+            return 0;
+        int n=s.size();
+        unordered_map<char,int> map;
+        for(int i=0; i<n; i++){
+            map[s[i]]++;
+        }
+        int i=0;
+        for(int i=0; i<n; i++){
+            if(map[s[i]]==1)
+                return i;
+        }
+        return -1;
+    }
+};
+
+//Using Array of Size 26
+//TC: O(N) + O(N)
+//SC: O(26)
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        int n=s.size();
+        if(n==1)
+            return 0;
+        int arr[26];
+        for(int i=0; i<26; i++){
+            arr[i]=0;
+        }
+        for(int i=0; i<n; i++){
+            arr[s[i]-'a']++;
+        }
+        for(int i=0; i<n; i++){
+            if(arr[s[i]-'a']==1)
+                return i;
+        }
+        return -1;
+    }
+};
