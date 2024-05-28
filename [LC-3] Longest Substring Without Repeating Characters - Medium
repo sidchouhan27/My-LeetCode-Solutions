@@ -1,0 +1,54 @@
+[LC-3] Longest Substring Without Repeating Characters - Medium
+Given a string s, find the length of the longest substring without repeating characters.
+
+Example 1:
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+
+Example 2:
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+
+Example 3:
+Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+
+Constraints:
+0 <= s.length <= 5 * 10^4
+s consists of English letters, digits, symbols and spaces.
+
+[C++] Solution:
+
+//Using Sliding Window + Set
+//Explaination: We use set to keep the frequency of the characters and use sliding window to calculate maximum length of substring with unique characters. 
+//We run a loop till i<s.size() && j<s.size(). Initialize max=1 (Minimum length will always be 1). 
+//First we check if character at j is present in set and insert it in the set if its not found in the set, increase j by 1 and calculate max=max(max, j-i). 
+//If character is found in set, we erase that character from set and increase i by 1. Lastly, we return max.
+//TC: O(N)
+//SC: O(k) k is the size of max substring with unique characters.
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n=s.size();
+        if(n==0)
+            return 0;
+        unordered_set<char> set;
+        int i=0, j=0, ans=1;
+        while(i<n && j<n){
+            if(set.find(s[j]) == set.end()){
+                set.insert(s[j]);
+                j++;
+                ans=max(ans, j-i);
+            }
+            else{
+                set.erase(s[i]);
+                i++;
+            }
+        }
+        return ans;
+    }
+};
