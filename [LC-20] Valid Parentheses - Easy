@@ -1,0 +1,62 @@
+[LC-20] Valid Parentheses - Easy
+
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+An input string is valid if:
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.
+ 
+
+Example 1:
+
+Input: s = "()"
+Output: true
+Example 2:
+
+Input: s = "()[]{}"
+Output: true
+Example 3:
+
+Input: s = "(]"
+Output: false
+ 
+
+Constraints:
+
+1 <= s.length <= 10^4
+s consists of parentheses only '()[]{}'.
+
+[C++] Solution:
+
+//TC: O(N)
+//SC: O(N)
+class Solution {
+public:
+    bool isValid(string s) {
+        if(s.size()%2!=0)
+            return false;
+        stack<char> stack;
+        for(int i=0; i<s.size(); i++){
+            if(s[i]=='(' || s[i]=='{' || s[i]=='['){
+                stack.push(s[i]);
+            }
+            else{
+                if(!stack.empty()){
+                    char top=stack.top();
+                    if((s[i]==')' && top=='(') || 
+                       (s[i]=='}' && top=='{') || 
+                       (s[i]==']' && top=='[')){
+                           stack.pop();
+                       }
+                    else{
+                        return false;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        return stack.empty();
+    }
+};
